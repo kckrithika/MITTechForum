@@ -1,0 +1,106 @@
+<?php
+	class comment
+	{
+		public $author = "";
+		public $comment = "";
+		public $timeOfComment = "";
+	}
+	class answer
+	{
+		public $id = "";
+		public $author = "";
+		public $answer = "";
+		public $timeOfAnswer = "";
+		public $isBest = "";
+	}
+	class post
+	{
+		public $id="";
+		public $asker="";
+		public $question="";
+		public $timeOfPost="";
+		public $topic="";
+		public $comments = array();
+		public $answers = array();
+		public $closed = "";
+	}
+	function execute($script)
+	{
+		$cmd = "/usr/bin/python3.4 -c \"".$script."\"";
+		return shell_exec($cmd);
+	}
+	
+	function getClass($id)
+	{
+		session_start();
+		$user = $_SESSION["username"];
+		session_write_close();
+		$rawthread="not initialized";
+		if($id!=0)
+		{
+			$rawthread = rtrim(execute("import ThreadsConnector as tc; print(tc.getThread(\\\"".$id."\\\"))"));
+		}
+		else
+		{
+			$rawthread = rtrim(execute("import ThreadsConnector as tc; print(tc.getLatest())"));
+		}
+		$post = new post();
+		if($rawthread!="{}")
+		{
+			$obj = json_decode($rawthread);
+			$post->id = $obj->id;
+			$post->asker = $obj->asker;
+			if($post->asker==$user)
+			{
+				$post->asker="You";
+			}
+			$post->question = $obj->question;
+			$post->timeOfPost = $obj->timeOfPost;
+			$topicJSON = rtrim(execute("import TopicsConnector as tc; print(tc.get(\\\"".$obj->topic."\\\"))"));
+			echo $topicJSON;
+			$topicOBJ = json_decode($topicJSON);
+			$post->topic = $topicOBJ->topic;
+			$post->closed = $obj->closed;
+		
+			$rawcomments = rtrim(execute("import CommentsConnector as cc; print(cc.getComments(\\\"".$post->id."\\\"))"));
+			$obj = json_decode($rawcomments);
+			$count = $obj->count;
+			for($i=0; $i<$count; $i+=1)
+			{
+				$cmnt = $obj->$i;
+				$comment = new comment();
+				$comment->author = $cmnt->author;
+				if($comment->author==$user)
+				{
+					$comment->author="You";
+				}
+				$comment->comment = $cmnt->comment;
+				$comment->timeOfComment = $cmnt->timeOfComment;
+				array_push($post->comments, $comment);
+			}
+		
+			$rawanswers = rtrim(execute("import AnswersConnector as ac; print(ac.getAnswers(\\\"".$post->id."\\\"))"));
+			$obj = json_decode($rawanswers);
+			$count = $obj->count;
+			for($i=0; $i<$count; $i+=1)
+			{
+				$ans = $obj->$i;
+				$answer = new answer();
+				$answer->id = $ans->id;
+				$answer->isBest = $ans->bestAnswer;
+				$answer->answer = $ans->answer;
+				$answer->author = $ans->answerer;
+				if($answer->author==$user)
+				{
+					$answer->author="You";
+				}
+				$answer->timeOfAnswer = $ans->timeOfAnswer;
+				array_push($post->answers, $answer);
+			}
+		}
+		return $post;
+	}
+	
+	$id = $_POST["ID"];
+	echo json_encode(getClass($id));
+?>

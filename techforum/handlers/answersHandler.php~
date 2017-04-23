@@ -1,0 +1,13 @@
+<?php
+	session_start();
+	$answerer = $_SESSION["username"];
+	$answer = $_POST["Answer"];
+	$thread = $_POST["thread"];
+	date_default_timezone_set("Asia/Calcutta");
+	$time = date("Y-m-d")." ".date("H:i:s");
+	$script = "import answersConnector; answersConnector.insert(\\\"".$thread."\\\", \\\"".$answer."\\\", \\\"".$answerer."\\\", \\\"".$time."\\\")";
+	$cmd = "/usr/bin/python3.4 -c \"".$script."\"";
+	//$output = exec($cmd, $array, $status);
+	echo $cmd." unexecuted";
+	exit(0);
+?>

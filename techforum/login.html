@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<script src = "scripts.js"></script>
+		<link rel="stylesheet" type="text/css" href="styles/style.css">
+		<link rel="shortcut icon" href="images/icon.ico">	
+	</head>
+	<body>
+		<div class="heading">
+			<img src="images/logo.ico" name="logo"/>
+			<h1> Clear your doubts! </h1>
+			<hr color="green">
+		</div>
+		<fieldset class="centerFieldset">
+			<legend> Login	</legend>
+			<form action="#" onsubmit="return login()" method="post">
+				<label for="username"> Register number: </label>
+				<input type="text" id="username"/><br><br>
+				<label for="password"> Date of Birth (dd/mm/yyyy): </label>
+				<input type="date" id="password"/><br><br>
+				<input type="submit" class="buttonType1" value="sign in"/>
+			</form>
+		</fieldset>
+		<p class = "errorMessage" id="loginError"></p>
+	</body>
+</html>

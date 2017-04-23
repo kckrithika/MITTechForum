@@ -1,0 +1,12 @@
+<?php
+	session_start();
+	$question = $_POST["Question"];
+	$username = $_SESSION["username"];
+	$topic = $_POST["Topics"];
+	date_default_timezone_set("Asia/Calcutta");
+	$datetime = date("Y-m-d")." ".date("H:i:s");
+	$script = "import ThreadsConnector; ThreadsConnector.insert(\\\"".$question."\\\",\\\"".$username."\\\",\\\"".$topic."\\\", \\\"".$datetime."\\\");";
+	$cmd = "/usr/bin/python3.4 -c \"".$script."\"";
+	$output = shell_exec($cmd);
+	echo $cmd." executed";
+?>

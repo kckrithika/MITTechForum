@@ -1,0 +1,51 @@
+#!usr/bin/python3.4
+import MySQLdb
+def getRecentID(date):
+	conn = MySQLdb.connect(host='127.0.0.1', user='root', passwd='root', db='KnowledgeLevelPredictor')
+	cursor = conn.cursor()
+	cursor.execute("""select id from QuestionComments where timeOfComment > %s""", (date, ))
+	result = cursor.fetchone()
+	return result;
+
+def insert(thread, comment, author, time):
+	conn = MySQLdb.connect(host='127.0.0.1', user='root', passwd='root', db='KnowledgeLevelPredictor')
+	cursor = conn.cursor()
+	cursor.execute("""insert into QuestionComments values(%s, %s, %s, %s, default)""", (thread, comment, author, time))
+	conn.commit()
+	conn.close()
+
+def getTimeOfComment(commentid):
+	conn = MySQLdb.connect(host='127.0.0.1', user='root', passwd='root', db='KnowledgeLevelPredictor')
+	cursor = conn.cursor()
+	cursor.execute("""select timeOfComment from QuestionComments where id = %s""", (commentid, ))
+	result = cursor.fetchone()
+	return result[0].strftime("%Y-%m-%d %H:%M:%S");
+
+def getAuthor(commentid):
+	conn = MySQLdb.connect(host='127.0.0.1', user='root', passwd='root', db='KnowledgeLevelPredictor')
+	cursor = conn.cursor()
+	cursor.execute("""select author from QuestionComments where id = %s""", (commentid, ))
+	result = cursor.fetchone()
+	return result[0];
+
+def getComment(commentid):
+	conn = MySQLdb.connect(host='127.0.0.1', user='root', passwd='root', db='KnowledgeLevelPredictor')
+	cursor = conn.cursor()
+	cursor.execute("""select comment from QuestionComments where id = %s""", (commentid, ))
+	result = cursor.fetchone()
+	return result[0];
+
+
+def getThread(commentid):
+	conn = MySQLdb.connect(host='127.0.0.1', user='root', passwd='root', db='KnowledgeLevelPredictor')
+	cursor = conn.cursor()
+	cursor.execute("""select thread from QuestionComments where id = %s""", (commentid, ))
+	result = cursor.fetchone()
+	return result;
+	
+def getCommentIDs(questionID):
+	conn = MySQLdb.connect(host='127.0.0.1', user='root', passwd='root', db='KnowledgeLevelPredictor')
+	cursor = conn.cursor()
+	cursor.execute("""select id from QuestionComments where thread = %s""", (questionID, ))
+	result = cursor.fetchall()
+	return result;

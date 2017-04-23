@@ -1,0 +1,30 @@
+<?php
+	$username = $_POST["username"];
+	$name = $_POST["name"];
+	$password = $_POST["password"];
+	$email = $_POST["email"];
+	$reg = $_POST["registerNo"];
+	$script = "import UserDetailsConnector; print(UserDetailsConnector.isAvailable(\\\"".$username."\\\"))";
+	$cmd = "/usr/bin/python3.4 -c \"".$script."\"";
+	if(exec($cmd, $returnVar)=="True")
+	{
+		echo "Username already taken!";
+	}
+	else
+	{
+		$script = "import UserDetailsConnector; print(UserDetailsConnector.isRegistered(\\\"".$reg."\\\"))";
+		$cmd = "/usr/bin/python3.4 -c \"".$script."\"";
+		if(exec($cmd, $returnVar)=="True")
+		{
+			echo "This register number is already registered!";
+		}
+		else
+		{
+			$insertcmd = "UserDetailsConnector.insert(\\\"".$username."\\\", \\\"".$name."\\\", \\\"".$password."\\\", \\\"".$reg."\\\",\\\"".$email."\\\")";
+			$script = "import UserDetailsConnector; ".$insertcmd;
+			$cmd = "/usr/bin/python3.4 -c \"".$script."\"";
+			exec($cmd, $returnVar);
+			echo "Registered successfully!";
+		}
+	}	
+?>

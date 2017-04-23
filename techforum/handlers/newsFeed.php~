@@ -1,0 +1,150 @@
+<?php
+
+	/* Globally declare the time variables. Set to current time. */
+	date_default_timezone_set("Asia/Calcutta");
+	$ThreadsTimeStamp = $QuestionCommentsTimeStamp = $answersTimeStamp = $AnswerCommentsTimeStamp = date("Y-m-d")." ".date("H:i:s");
+	
+	function formatString($string)
+	{
+		$string = rtrim($string);
+		$string = str_replace("(", "", $string);
+		$string = str_replace(")", "", $string);
+		$string = str_replace(", ", "", $string);
+		$string = rtrim($string, ",,");
+		$string = rtrim($string, ",");
+		return $string;
+	}
+	
+	function getArray($string)
+	{
+		$string = str_replace("(", "", $string);
+		$string = str_replace(")", "", $string);
+		$string = rtrim($string, ",,");
+		$string = rtrim($string, ",");
+		$array = explode(',', $string);
+		return $array;
+	}
+	function execute($script)
+	{
+		$cmd = "/usr/bin/python3.4 -c \"".$script."\"";
+		return shell_exec($cmd);
+	}
+	function printheader($string)
+	{
+		header("Content-Type: text/event-stream");
+		header("Cache-Control: no-cache");
+		echo "data: ";
+		echo $string;
+		echo "\n\n";
+		ob_flush();
+		flush();
+	}
+	function display($id)
+	{
+		/* Fetch all the data from the database first */
+		
+		/* Get the asker */
+		$asker = rtrim(execute("import ThreadsConnector; print(ThreadsConnector.getAsker(\\\"".$id."\\\"))"));
+		
+		/* Get the question */
+		$question = rtrim(execute("import ThreadsConnector; print(ThreadsConnector.getQuestion(\\\"".$id."\\\"))"));
+		
+		/* Get comment id s for the current thread id */
+		$commentids = rtrim(execute("import questionCommentsConnector; print(questionCommentsConnector.getCommentIDs(\\\"".$id."\\\"))"));
+		
+		/* convert the comment ids into array and put them in a string */
+		$array1 = getArray($commentids);
+		
+		$commentString = "";
+		foreach($array1 as $elementid)
+		{
+			if($elementid!="")
+			{
+				$author = formatString(execute("import questionCommentsConnector; print(questionCommentsConnector.getAuthor(\\\"".$elementid."\\\"))"));
+				$comment = formatString(execute("import questionCommentsConnector; print(questionCommentsConnector.getComment(\\\"".$elementid."\\\"))"));
+				$time = rtrim(execute("import questionCommentsConnector; print(questionCommentsConnector.getTimeOfComment(\\\"".$elementid."\\\"))"));
+				$commentString = $commentString.$author." said <br>\"".$comment."\"<br>at ".$time."<br>";
+			}
+		}
+		
+		/*Get answer id 's for the current thread id*/
+		$answerids = rtrim(execute("import answersConnector; print(answersConnector.getanswerIDs(\\\"".$id."\\\"))"));
+		
+		/* convert the answerids into array and put them in a string */
+		$array2 = getArray($answerids);
+		
+		/* Check if the thread is closed */
+		$bestbutton = FALSE;
+		session_start();
+		$isclosed = formatString(execute("import ThreadsConnector; print(ThreadsConnector.isClosed(\\\"".$id."\\\"))"));
+		if(($isclosed=='0')&&($asker==$_SESSION["username"]))
+		{
+			$bestbutton = TRUE;
+		}
+		$answerString = "";
+		foreach($array2 as $elementid)
+		{
+			if($elementid!="")
+			{
+				$answerer = formatString(execute("import answersConnector; print(answersConnector.getAnswerer(\\\"".$elementid."\\\"))"));
+				$answer = formatString(execute("import answersConnector; print(answersConnector.getAnswer(\\\"".$elementid."\\\"))"));
+				$time = rtrim(execute("import answersConnector; print(answersConnector.getTimeOfAnswer(\\\"".$elementid."\\\"))"));
+				$answerString = $answerString.$answerer." answered<br>".$answer."<br> at ".$time."<br>";
+				if($bestbutton==TRUE)
+				{
+					$answerString = $answerString."<button onclick = \"selectbest(\\\"".$elementid."\\\")\">select as best answer</button><br>";
+				}
+			}
+		}
+		/* answer box */
+		$answerbox = "<textarea name=\"".$id."\" class=\"box\"></textarea><button class=\"buttonType3\" onclick=\"postAnswer(this)\">Give Answer</button>";
+		
+		/* comment box */
+		$commentbox = "<textarea name=\"".$id."\" class=\"box\"></textarea><button class=\"buttontype3\" onclick=\"postComment(this)\">Comment</button>";
+		/* Prepare the formatted string */
+		$result = "<div id=\"post\"><div id=\"askerPane\">".$asker."</div><div id=\"questionPane\">".$question."</div><hr><div id=\"comments\">".$commentString."<br>".$commentbox."</div><hr><div id=\"answers\">".$answerString."<br>".$answerbox."</div><hr></div>";
+		
+		/* Print all the fetched information */
+		printheader($result);
+	}
+	
+	while(true)
+	{
+		/* Getting updates from Threads table */
+		$recentThread = formatString(execute("import ThreadsConnector; print(ThreadsConnector.getRecentID(\\\"".$ThreadsTimeStamp."\\\"))"));
+		printheader("Break point 0");
+		if($recentThread!="None")
+		{
+			$ThreadsTimeStamp = rtrim(execute("import ThreadsConnector; print(ThreadsConnector.getTimeOfPost(\\\"".$recentThread."\\\"))"));
+			display($recentThread);
+		}
+		/* Getting updates from QuestionComments table */
+		$recentComment = formatString(execute("import questionCommentsConnector; print(questionCommentsConnector.getRecentID(\\\"".$QuestionCommentsTimeStamp."\\\"))"));
+		printheader("Break point 1");
+		if($recentComment!="None")
+		{
+			$QuestionCommentsTimeStamp = rtrim(execute("import questionCommentsConnector; print(questionCommentsConnector.getTimeOfComment(\\\"".$recentComment."\\\"))"));
+			$thread = formatString(execute("import questionCommentsConnector; print(questionCommentsConnector.getThread(\\\"".$recentComment."\\\"))"));
+			display($thread);
+		}
+		
+		/* Getting updates from Answers table */
+		$recentAnswer = formatString(execute("import answersConnector; print(answersConnector.getRecentID(\\\"".$answersTimeStamp."\\\"))"));
+		printheader("Break point 2");
+		if($recentAnswer!="None")
+		{
+			$answersTimeStamp = rtrim(execute("import answersConnector; print(answersConnector.getTimeOfAnswer(\\\"".$recentAnswer."\\\"))"));
+			$thread = formatString(execute("import answersConnector; print(answersConnector.getThread(\\\"".$recentAnswer."\\\"))"));
+			display($thread);
+		}
+		
+		/* Getting updates from AnswerComments table */
+		$recentAnswerComment = formatString(execute("import answerCommentsConnector; print(answerCommentsConnector.getRecentID(\\\"".$AnswerCommentsTimeStamp."\\\"))"));
+		if($recentAnswerComment!="None")
+		{
+			$AnswerCommentsTimeStamp = rtrim(execute("import answerCommentsConnector; print(answerCommentsConnector.getTimeOfComment(\\\"".$recentAnswerComment."\\\"))"));
+			$thread = formatString(execute("import answerCommentsConnector; print(answerCommentsConnector.getThread(\\\"".$recentAnswerComment."\\\"))"));
+			display($thread);
+		} 
+	}
+?>

@@ -1,0 +1,12 @@
+<?php
+	$comment = $_POST["Comment"];
+	$thread = $_POST["id"];
+	session_start();
+	$author = $_SESSION["username"];
+	session_write_close();
+	date_default_timezone_set("Asia/Calcutta");
+	$time = date("Y-m-d")." ".date("H:i:s");
+	$script = "import CommentsConnector; CommentsConnector.insert(\\\"".$thread."\\\", \\\"".$author."\\\", \\\"".$comment."\\\", \\\"".$time."\\\")";
+	$cmd = "/usr/bin/python3.4 -c \"".$script."\"";
+	$output = shell_exec($cmd);
+?>

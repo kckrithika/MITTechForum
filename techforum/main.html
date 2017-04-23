@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<script src = "MainScript.js"></script>
+		<link rel="stylesheet" type="text/css" href="styles/style.css">
+		<link rel="shortcut icon" href="images/icon.ico">	
+	</head>
+	<body>
+		<div id="optionsPane">
+			<img height = "100%" src="images/logo.ico"></img>
+			<font id="smallHeading">Clear your doubts!</font>
+			<button id="notibutton" onclick = "notipopup()" class="buttonType2"></button>
+			<button class="buttonType2" onclick = "openModal(this)" id="nameDisplay">Profile</button></a>
+			<form action="handlers/logout.php"><input type="submit" value="Logout" class="buttonType2"></input></form>
+		</div>
+		<div id="body">
+			<div id="left">
+				<div id="AskDivision">
+					<br>
+					<fieldset class="leftFieldset">
+						<form onsubmit="return postQuestion()" method="post">
+							<label>Your question: </label>
+							<textarea class = "questionBox" row="25" name="Question" id="Question" required> </textarea>
+							<label>Topic: </label>
+							<select class = "select1" name="Topics" id="topics" onchange="onchangeTopic();">
+								
+							</select>
+							<input class="buttonType2" type="submit" value="Ask!"/>
+						</form>
+					</fieldset>
+				</div>
+				<div id="coverNewsFeed">
+					<div id="NewsFeed" onscroll="scrollCheck(this)">
+		
+					</div>
+				</div>
+			</div>			
+			<div id="Suggestions">
+				We think you can help!
+			</div>
+		</div>
+	</body>
+</html>

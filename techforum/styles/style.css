@@ -1,0 +1,477 @@
+.heading
+{
+	line-height: 6em;
+	height: 15%;
+}
+
+.buttonType1
+{
+	width: 48%;
+	background-color: green;
+	color: white;
+	font-family: serif;
+	font-weight: bold;
+	cursor: pointer;
+	border-radius:10%;
+}
+
+.buttonType1:hover
+{
+	background-color: white;
+	color: green;
+	box-shadow: 0.3em 0.3em 0.1em black;
+}
+.buttonType2
+{
+	height: 100%;
+	border: none;
+	width: 10%;
+	float: right;
+	background-color: green;
+	color: white;
+	font-family: serif;
+	font-weight: bold;
+	cursor: pointer;
+}
+.buttonType2:hover
+{
+	background-color:white;
+	color: green;
+}
+.questionBox
+{
+	height: 7em;
+	width: 99%;
+}
+
+.centerFieldset
+{
+	border: 5px solid green;
+	border-radius: 10%;
+	box-shadow: 1em 1em 1em black;
+	padding: 10px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+.leftFieldset
+{
+	border: 3px solid green;
+	border-radius: 5%;
+	padding: 10px;
+	position: absolute;
+	width: 97%;
+}
+.select1
+{
+	width: 88%;
+	line-height: 7%;
+	background-color: green;
+	border: none;
+	color: white;
+	font-family: serif;
+}
+.errorMessage
+{
+	color: red;
+}
+
+.renderedbox
+{
+	width: 87.5%;
+	height: 4em;
+}
+
+.Meta
+{
+	color: green;
+	font-weight: bold;
+}
+
+.post
+{
+	position: relative;
+	border: 0.1em solid green;
+	padding: 0.3em;
+}
+.thingreenbackground
+{
+	background-color: green;
+	color: white;
+	font-weight: bold;
+	font-size: 0.7em;
+	padding-top: 0.3em;
+	padding-bottom: 0.3em;
+}
+.renderedtext
+{
+	font-size: 0.7em;
+	font-weight: bold;
+	margin-top: 0.2em;
+	position: relative;
+}
+
+.answerbutton
+{
+	color: white;
+	border: none;
+	font-family: serif;
+	font-weight: bold;
+	font-size: 1em;
+	float:right;
+	width: 9%;
+	padding-bottom: 3em;
+	padding-top: 1.5em;
+	padding-left: 1em;
+	padding-right: 1em;
+	background-color: green;
+	vertical-align: top;
+	height: 3.4em;
+	cursor: pointer;
+}
+.answerbutton:hover
+{
+	background-color: white;
+	color: green;
+}
+
+.commentbutton
+{
+	color: white;
+	border: none;
+	float:right;
+	font-family: serif;
+	font-weight: bold;
+	font-size: 1em;
+	padding-bottom: 3em;
+	padding-top: 1.5em;
+	padding-left: 2em;
+	padding-right: 2em;
+	background-color: green;
+	vertical-align: top;
+	height: 3.4em;
+	cursor: pointer;
+}
+.commentbutton:hover
+{
+	background-color: white;
+	color: green;
+}
+
+.bestbutton
+{
+	display: inline-block;
+	float: left;
+	color: white;
+	border: none;
+	float:left;
+	font-family: serif;
+	font-weight: bold;
+	font-size: 1em;
+	background-color: green;
+	vertical-align: top;
+	height: 5em;
+	width: 4.5em;
+	cursor: pointer;
+	padding: 0.1em;
+	margin-right: 0.2em;
+	margin-bottom: 0.2em;
+	margin-top: 0.05em;
+}
+.bestbutton:hover
+{
+	background-color:white;
+	color:green;
+}
+
+.editbutton
+{
+	color: white;
+	border: none;
+	float: right;
+	font-family: serif;
+	font-weight: bold;
+	font-size: 1em;
+	padding-bottom: 2.5em;
+	padding-top: 1.5em;
+	padding-left: 3.65em;
+	padding-right: 3.65em;
+	background-color: green;
+	vertical-align: top;
+	height: 3.4em;
+	cursor: pointer;
+	margin-top: 0.5em;
+
+}
+.editbutton:hover
+{
+	background-color: white;
+	color: green;
+}
+#body
+{
+	position: relative;
+	height: 94%;
+}
+#registerError
+{
+	position: absolute;
+	bottom: 10%;
+	left: 42%;
+}
+#loginError
+{
+	position: absolute;
+	bottom: 23%;
+	left: 41%;
+}
+#optionsPane
+{
+	height: 5%;
+	position: relative;
+	background-color: green;
+	border: 0.1em solid black;
+}
+#left
+{
+	position: absolute;
+	float: left;
+	width: 80%;
+	height: 100%;
+	border: 0.1em solid black;
+}
+#AskDivision
+{
+	position: relative;
+	min-height: 35%;
+	overflow: hidden;
+	min-width: 78.7%;
+	border: 0.1em solid black;
+}
+#suggestions
+{
+	float:right;
+	padding: 1em;
+	width:18%;
+	overflow:auto;
+	height: 97%;
+	border: 0.1em solid black;
+	font-size: 0.7em;
+	font-weight: bold;
+}
+#smallHeading
+{
+	position:relative;
+	text-shadow: 0.07em 0.07em black;
+	color: white;
+	float: left;
+	font-weight: bold;
+	font-size: 100%;
+	margin-left: 1%;
+	top: 25%;
+	bottom: 25%;
+	vertical-align: middle;
+}
+#NewsFeed
+{
+	height: 96%;
+	overflow:auto;
+	border: 0.1em solid black;
+	padding: 0.3em;
+}
+#coverNewsFeed
+{
+	height: 63%;
+	overflow:auto;
+	padding: 0.3em;
+	border: none;
+}
+
+h1
+{
+	position: relative;
+	text-shadow: 0.07em 0.07em black;
+	color: rgb(0, 150, 0);
+}
+
+img
+{
+	display: block;
+	vertical-align: middle;
+	float: left;
+}
+
+label
+{
+	color: green;
+	display: block;
+}
+
+legend
+{
+	font-size: 1.3em;
+	font-weight: bold;
+	background-color: green;
+	border-radius: 10%;
+	color: white;
+}
+
+@keyframes blink {
+    /**
+     * At the start of the animation the dot
+     * has an opacity of .2
+     */
+    0% {
+      opacity: .2;
+    }
+    /**
+     * At 20% the dot is fully visible and
+     * then fades out slowly
+     */
+    20% {
+      opacity: 1;
+    }
+    /**
+     * Until it reaches an opacity of .2 and
+     * the animation can start again
+     */
+    100% {
+      opacity: .2;
+    }
+}
+.loading
+{
+	font-weight:bold;
+	font-size: 1em;
+	color: black;
+	display: block;
+	margin-left:auto;
+	margin-right: auto;
+}
+.loading span 
+{
+    animation-name: blink;
+    animation-duration: 1.4s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+}
+
+.loading span:nth-child(2) 
+{
+    animation-delay: .2s;
+}
+
+.loading span:nth-child(3) 
+{
+    animation-delay: .4s;
+}
+.profileSpan:hover
+{
+	font-size:120%;
+	cursor:pointer;
+}
+.profile
+{
+	font-size:0.7em;
+	font-weight: bold;
+	display: block;
+}
+.modal 
+{
+	display: inline-block;
+    position: fixed; 
+    z-index: 1; /* Sit on top */
+    padding-top: 13em; /* Location of the box */
+    padding-left: 13em;
+    padding-bottom: 100%;
+    padding-right: 100%;
+    top: 0;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modal-content 
+{
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close 
+{
+	display: inline-block;
+    color: #aaaaaa;
+    float: right;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus 
+{
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.unseen
+{
+	color: white;
+	font-weight: bold;
+	font-size: 0.7em;
+	background-color:green;
+	padding: 2%;
+}
+
+.seen
+{
+	padding: 2%;
+	color: green;
+	font-weight: bold;
+	font-size: 0.7em;
+	background-color: white;
+}
+
+.link:hover
+{
+	cursor:pointer;
+	text-decoration:underline;
+}
+#notifications
+{
+	visibility: hidden;
+	display: inline-block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	float:right;
+	width: 10em;
+	height: 10em;
+	overflow: auto;
+	z-index: 1;
+	top: 0;
+}
+.suggestion
+{
+	color:green;
+	font-weight:bold;
+}
+.suggestion:hover
+{
+	text-decoration:underline;
+	background-color:green;
+	color:white;
+	cursor: pointer;
+}
+.TopicButton
+{
+	float:right;
+	background-color:green;
+	color:white;
+}
+.smallerrenderedbox
+{
+	width: 82%;
+	height: 4em;
+}

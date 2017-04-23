@@ -1,0 +1,8 @@
+import trueskill
+from trueskill import rate_1vs1
+def updateRank(winnerRank=25.000, winnerUncertainty=8.333, loserRank=25.000, loserUncertainty=8.333):
+	winner, loser = trueskill.Rating(mu=winnerRank, sigma=winnerUncertainty), trueskill.Rating(mu=loserRank, sigma=loserUncertainty)
+	winner, loser = rate_1vs1(winner, loser)
+	print ('%f' %winner.mu)
+	print ('%f' %loser.mu)
+	return winner.mu, winner.sigma, loser.mu, loser.sigma

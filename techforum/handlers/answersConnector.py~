@@ -1,0 +1,50 @@
+#!usr/bin/python3.4
+import MySQLdb
+def insert(thread, answer, answerer, time):
+	conn = MySQLdb.connect(host='127.0.0.1', user='root', passwd='root', db='KnowledgeLevelPredictor')
+	cursor = conn.cursor()
+	cursor.execute("""insert into Answers values(%s, %s, %s, %s, %s, default)""", (thread, answer, answerer, time, 0))
+	conn.commit()
+	conn.close()
+
+def getRecentID(date):
+	conn = MySQLdb.connect(host='127.0.0.1', user='root', passwd='root', db='KnowledgeLevelPredictor')
+	cursor = conn.cursor()
+	cursor.execute("""select id from Answers where timeOfAnswer > %s""", (date, ))
+	result = cursor.fetchone()
+	return result;
+
+def getThread(answerid):
+	conn = MySQLdb.connect(host='127.0.0.1', user='root', passwd='root', db='KnowledgeLevelPredictor')
+	cursor = conn.cursor()
+	cursor.execute("""select thread from Answers where id = %s""", (answerid, ))
+	result = cursor.fetchone()
+	return result;
+
+def getTimeOfAnswer(answerid):
+	conn = MySQLdb.connect(host='127.0.0.1', user='root', passwd='root', db='KnowledgeLevelPredictor')
+	cursor = conn.cursor()
+	cursor.execute("""select timeOfAnswer from Answers where id = %s""", (answerid, ))
+	result = cursor.fetchone()
+	return result[0].strftime("%Y-%m-%d %H:%M:%S");
+
+def getanswerIDs(questionID):
+	conn = MySQLdb.connect(host='127.0.0.1', user='root', passwd='root', db='KnowledgeLevelPredictor')
+	cursor = conn.cursor()
+	cursor.execute("""select id from Answers where thread = %s""", (questionID, ))
+	result = cursor.fetchall()
+	return result;
+
+def getAnswer(answerid):
+	conn = MySQLdb.connect(host='127.0.0.1', user='root', passwd='root', db='KnowledgeLevelPredictor')
+	cursor = conn.cursor()
+	cursor.execute("""select answer from Answers where id = %s""", (answerid, ))
+	result = cursor.fetchone()
+	return result[0];
+
+def getAnswerer(answerid):
+	conn = MySQLdb.connect(host='127.0.0.1', user='root', passwd='root', db='KnowledgeLevelPredictor')
+	cursor = conn.cursor()
+	cursor.execute("""select answerer from Answers where id = %s""", (answerid, ))
+	result = cursor.fetchone()
+	return result[0];

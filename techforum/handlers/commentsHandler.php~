@@ -1,0 +1,13 @@
+<?php
+	/*session_start();
+	$author = $_SESSION["username"];
+	$comment = $_POST["Comment"];
+	$thread = $_POST["thread"];
+	date_default_timezone_set("Asia/Calcutta");
+	$time = date("Y-m-d")." ".date("H:i:s");
+	$script = "import questionCommentsConnector; questionCommentsConnector.insert(\\\"".$thread."\\\", \\\"".$comment."\\\", \\\"".$author."\\\", \\\"".$time."\\\")";
+	$cmd = "/usr/bin/python3.4 -c \"".$script."\"";
+	$output = shell_exec($cmd);
+	echo $output;*/
+	echo "server side";
+?>
